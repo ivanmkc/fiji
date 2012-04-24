@@ -1,0 +1,23 @@
+import fiji.build.MiniMaven;
+import fiji.build.MiniMaven.Coordinate;
+
+ijRoot = new File(System.getProperty("ij.dir"));
+pomPath = new File(ijRoot, "modules/imagej2/pom.xml");
+if (!pomPath.exists()) {
+	System.err.println("Could not find ImageJ's pom.xml");
+}
+else {
+	setAccessibility(true);
+	miniMaven = new MiniMaven(null, System.err, false);
+	pom = miniMaven.parse(pomPath, null);
+	ijVersion = pom.expand("${imglib2.version}");
+	coordinate = new Coordinate("net.imagej", "ij-launcher", ijVersion);
+	pom2 = pom.findPOM(coordinate, false, true);
+print(pom2.coordinate.getKey());
+	coordinate = new Coordinate("net.imagej", "ij-launcher", ijVersion, null, false, null, "amd64-Linux-gcc-executable");
+	pom2 = pom.findPOM(coordinate, false, true);
+print(pom2.directory);
+print(pom2.coordinate.classifier);
+print(pom2.getJarName());
+print(pom2.coordinate.getFileName(false, true, "jar"));
+}
