@@ -9,10 +9,13 @@ if (!pomPath.exists()) {
 else {
 	setAccessibility(true);
 	miniMaven = new MiniMaven(null, System.err, false);
+	miniMaven.verbose = true;
 	pom = miniMaven.parse(pomPath, null);
 	ijVersion = pom.expand("${imglib2.version}");
 	coordinate = new Coordinate("net.imagej", "ij-launcher", ijVersion);
+print("Trying to get " + coordinate);
 	pom2 = pom.findPOM(coordinate, false, true);
+print("Got pom " + pom2 + " with jar name " + pom2.getJarName());
 print(pom2.coordinate.getKey());
 	coordinate = new Coordinate("net.imagej", "ij-launcher", ijVersion, null, false, null, "amd64-Linux-gcc-executable");
 	pom2 = pom.findPOM(coordinate, false, true);

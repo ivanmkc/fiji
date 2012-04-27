@@ -788,10 +788,12 @@ public class MiniMaven {
 			} catch (FileNotFoundException e) { /* ignore */ }
 			path += dependency.version + "/";
 			if (dependency.version.endsWith("-SNAPSHOT")) try {
+System.err.println("Trying to download version " + dependency.version);
 				if (!maybeDownloadAutomatically(dependency, quiet, downloadAutomatically))
 					return null;
 				if (dependency.version.endsWith("-SNAPSHOT"))
 					dependency.version = parseSnapshotVersion(new File(path, "maven-metadata-snapshot.xml"));
+System.err.println("Got version " + dependency.version);
 			} catch (FileNotFoundException e) { /* ignore */ }
 			else {
 				File file = findInFijiDirectories(dependency);
